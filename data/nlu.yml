@@ -1,0 +1,31 @@
+version: "3.1"
+nlu:
+- intent: greet
+  examples: |
+    - hello
+    - hi
+    - hey
+    - good morning
+    - namaste
+
+- intent: goodbye
+  examples: |
+    - bye
+    - goodbye
+    - see you later
+    - take care
+
+- intent: ask_catalog_info
+  examples: |
+    - tell me about the iPhone 14
+    - what are the specs of Samsung Galaxy S21
+    - give me details of OnePlus 11
+    - show me the features of Redmi Note 12
+    - what is the price of Pixel 7
+
+- intent: language_switch
+  examples: |
+    - speak in Hindi
+    - can you talk in Tamil?
+    - change language to Marathi
+    - please respond in Bengali

@@ -1,0 +1,40 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - ask_catalog_info
+  - language_switch
+
+entities:
+  - product
+  - language
+
+slots:
+  product:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: product
+
+  language:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: language
+
+responses:
+  utter_greet:
+    - text: "Hi! How can I assist you today?"
+
+  utter_goodbye:
+    - text: "Goodbye! Have a great day!"
+
+  utter_default:
+    - text: "I'm not sure I understand. Can you rephrase?"
+
+actions:
+  - action_respond_with_catalog
+  - action_set_language

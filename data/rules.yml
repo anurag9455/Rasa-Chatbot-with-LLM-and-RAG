@@ -1,0 +1,16 @@
+version: "3.1"
+rules:
+- rule: Greet user
+  steps:
+    - intent: greet
+    - action: utter_greet
+
+- rule: Handle catalog queries
+  steps:
+    - intent: ask_catalog_info
+    - action: action_respond_with_catalog
+
+- rule: Handle language switch
+  steps:
+    - intent: language_switch
+    - action: action_set_language
