@@ -25,7 +25,11 @@ nlu:
 
 - intent: language_switch
   examples: |
-    - speak in Hindi
-    - can you talk in Tamil?
-    - change language to Marathi
-    - please respond in Bengali
+    - switch to Hindi
+    - talk in Marathi
+    - can you speak Tamil?
+    - respond in Bengali
+    - change language to Kannada
+    - please use Gujarati
+    - use English
+
