@@ -145,9 +145,10 @@ class ActionRespondWithCatalog(Action):
                                 """.strip()
             else:
                 context = "No matching product was found in the catalog."
-
+            # 👇 Get preferred language (default: English)
+            preferred_language = tracker.get_slot("language") or "english"
             # 🧠 Send to LLaMA3 with context
-            prompt = f"""You are an expert product assistant. Use the product info below to answer the user's question.
+            prompt = f"""You are an expert product assistant. Also Respond in {preferred_language.title()}.Use the product info below to answer the user's question. 
 
             Product Info:
             {context}
@@ -184,6 +185,19 @@ class ActionRespondWithCatalog(Action):
         return []
 
 
+# class ActionSetLanguage(Action):
+#     def name(self) -> Text:
+#         return "action_set_language"
+
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+#         user_text = tracker.latest_message.get("text")
+#         response = f"Okay! I will now respond in your preferred language. [🔤 Multilingual mode coming soon 🚀]"
+
+#         dispatcher.utter_message(text=response)
+#         return []
 class ActionSetLanguage(Action):
     def name(self) -> Text:
         return "action_set_language"
@@ -193,7 +207,18 @@ class ActionSetLanguage(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         user_text = tracker.latest_message.get("text")
-        response = f"Okay! I will now respond in your preferred language. [🔤 Multilingual mode coming soon 🚀]"
+        language = None
 
-        dispatcher.utter_message(text=response)
-        return []
+        # Simple detection from keywords (could use entities later)
+        language_keywords = ["hindi", "tamil", "marathi", "bengali", "gujarati", "kannada", "english"]
+        for lang in language_keywords:
+            if lang in user_text.lower():
+                language = lang
+                break
+
+        if language:
+            dispatcher.utter_message(text=f"Got it! I’ll respond in {language.title()} from now on.")
+            return [{"event": "slot", "name": "language", "value": language}]
+        else:
+            dispatcher.utter_message(text="Sorry, I couldn’t detect the language you want to switch to.")
+            return []
